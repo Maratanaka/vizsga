@@ -1,0 +1,45 @@
+(config)#hostname router1
+
+(config)#interface Ethernet 0
+(config-if)#ip address 195.220.123.1 255.255.255.0
+(config-if)#description LAN-kapcsolat
+(config-if)#no shutdown
+(config-if)#exit
+
+(config)#router rip
+(config-router)#version 2
+(config-router)#no auto-summary
+(config-router)#network 195.220.123.0
+(config-router)#network 193.155.145.0
+(config-router)#network 188.15.70.0
+(config-router)#exit
+
+(config)#ip dhcp excluded-address 192.168.0.1 192.168.0.10
+(config)#ip dhcp pool lan1
+(config-dhcp)#network 192.168.0.0 255.255.255.0
+(config-dhcp)#default-router 192.168.0.1
+(config-dhcp)#dns-server 1.2.3.4
+
+Konzoljelszó beállítása:
+Switch(config)# line console 0
+Switch(config-line)# password jelszo
+Switch(config-line)# login
+
+Enable jelszó beállítása:
+Switch(config)# enable password jelszo
+
+Enable titkos jelszó (ez az „erősebb”):
+Switch(config)# enable secret jelszo
+
+Jelszótitkosítás bekapcsolása:
+Switch(config)# service passwod-encryption
+
+Virtuális terminálok jelszavainak beállítása:
+Switch(config)# line vty 0 15
+Switch(config-line)# password jelszo
+Switch(config-line)# login
+
+Napi üzenet beállítása (elválasztó karakter pl. a # ):
+Switch(config)# banner motd #Belepes csak engedellyel!#
+
+Switch(config)#ip default-gateway 10.0.0.254
